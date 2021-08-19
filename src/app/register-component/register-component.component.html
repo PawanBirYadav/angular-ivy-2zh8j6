@@ -1,0 +1,189 @@
+
+<div class="myContent">
+  <form #registrationForm="ngForm" style="background-color:beige">
+    <div class="row">
+      <div class="col-md-4">
+      </div>
+      <div class="col-md-4">
+        <h2 style="text-align:center;font-style:italic;color:chocolate;font-weight:700;font-family:'Monotype Corsiva'">
+          Register
+        </h2>
+
+        <div style="text-align:center;color:seagreen;font:small">
+          <p>All fields are mandatory</p>
+          <br />
+          <div class="form-group">
+            <div>
+              <label>First Name</label>
+              <br />
+
+              <input type="text" name="firstName" placeholder="Enter the first name" class="form-Control" #firstNameRef="ngModel" [(ngModel)]="firstName" ngModel required pattern="[a-zA-Z][a-zA-Z]+" />
+            </div>
+            <div *ngIf="firstNameRef.errors && (firstNameRef.touched || firstNameRef.dirty)" style="color:red">
+              <div [hidden]="!firstNameRef.errors.required">
+                <p>&nbsp; First Name is mandatory</p>
+              </div>
+              <div [hidden]="!firstNameRef.errors.pattern">
+                <p>&nbsp; First Name must contain only Alphabets , No Spaces</p>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="form-group">
+            <div>
+              <label>Last Name</label>
+              <br />
+            </div>
+            <input type="text" name="lastName" placeholder="Enter the last name" class="form-Control" #lastNameRef="ngModel" [(ngModel)]="lastName" ngModel required pattern="[a-zA-Z][a-zA-Z]+" />
+            <div *ngIf="lastNameRef.errors && (lastNameRef.touched || lastNameRef.dirty)" style="color:red">
+              <div [hidden]="!lastNameRef.errors.required">
+                <p>&nbsp; Last Name is mandatory</p>
+              </div>
+              <div [hidden]="!lastNameRef.errors.pattern">
+                <p>&nbsp; Last Name must contain only Alphabets , No Spaces</p>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="form-group">
+            <div>
+              <label>Email Id</label>
+              <br />
+            </div>
+            <input type="email" name="email" placeholder="Abc@pqrs.xyz" class="form-Control" #emailIdRef="ngModel" [(ngModel)]="emailId" ngModel required [email]="true" />
+            <div *ngIf="emailIdRef.errors && (emailIdRef.touched || emailIdRef.dirty)" style="color:red">
+              <div [hidden]="!emailIdRef.errors.required">
+                <p>&nbsp; EmailId is mandatory</p>
+              </div>
+              <div [hidden]="!emailIdRef.errors.email">
+                <p>&nbsp; EmailId not in required format</p>
+              </div>
+            </div>
+          </div>
+
+          <br />
+
+          <div class="form-group">
+            <div>
+              <label>Password</label>
+              <br />
+            </div>
+            <input type="password" name="password" #passwordRef="ngModel" class="form-Control" placeholder="Should be minimum 8 characters" size="30" minlength="8" maxlength="16" [(ngModel)]="password" ngModel required />
+            <div *ngIf="passwordRef.errors && (passwordRef.touched || passwordRef.dirty)" style="color:red">
+              <p [hidden]="!passwordRef.errors.required">
+                Password is mandatory
+              </p>
+              <p [hidden]="!(passwordRef.errors.minlength || passwordRef.errors.maxlength) ">
+                Password should be between 8-16 characters
+              </p>
+            </div>
+          </div>
+          <br />
+          <div class="form-group">
+            <div>
+              <label>Confirm Password</label>
+              <br />
+            </div>
+            <input type="password" #confirmPassRef="ngModel" placeholder="Re-enter your password" class="form-Control" name="confirmPass" [(ngModel)]="confirmPass" size="30" minlength="8" maxlength="16" ngModel required (change)="passwordMatch(passwordRef.value,confirmPassRef.value)" />
+            <div *ngIf="confirmPassRef.errors && (confirmPassRef.touched || confirmPassRef.dirty)" style="color:red">
+              <p [hidden]="!confirmPassRef.errors.required">
+                Confirm Password is mandatory
+              </p>
+              <p [hidden]="!(confirmPassRef.errors.minlength || confirmPassRef.errors.maxlength) ">
+                Password should be between 8-16 characters
+              </p>
+
+            </div>
+            <div [hidden]="(!confirmPassRef.touched  || passErr)" style="color:red">
+              Password Does'nt match
+            </div>
+          </div>
+
+          <br />
+          <div class="form-group">
+
+            <div>
+              <label for="gender">Gender</label><br />
+              <input type="radio" id="gender" name="gender" #genderRef="ngModel" class="form-Control" [(ngModel)]="gender" ngModel required value="Male" />
+              <label for="Male">Male</label>&nbsp;&nbsp;
+              <input type="radio" name="gender" #genderRef="ngModel" class="form-Control" [(ngModel)]="gender" ngModel required value="Female" />
+              <label for="Female">Female</label>&nbsp;&nbsp;
+            </div>
+
+            <div *ngIf="genderRef.errors && (genderRef.touched || genderRef.dirty)" style="color:red">
+              <p [hidden]="!genderRef.errors.required">
+                Gender is mandatory
+              </p>
+
+            </div>
+          </div>
+
+          <br />
+          <div class="form-group">
+            <label>Contact Number</label>
+            <br />
+            <input type="tel" name="contact" placeholder="Enter the 10-digit contact number" #contactNoRef="ngModel" class="form-Control" [(ngModel)]="contactNo" ngModel required pattern="^[1-9]\d{9}$" maxlength="10" />
+            <div *ngIf="contactNoRef.errors && (contactNoRef.touched || contactNoRef.dirty)" style="color:red">
+              <p [hidden]="!contactNoRef.errors.required">
+                Contact Number is mandatory
+              </p>
+              <p *ngIf="contactNoRef.errors.pattern ">
+                Contact number should not start with 0 and must have 10 digits
+              </p>
+
+            </div>
+          </div>
+
+          <br />
+          <div class="form-group">
+            <div>
+              <label>Date of Birth</label>
+              <br />
+              <input type="date" name="dob" placeholder="mm/dd/yyyy" #dateOfBirthRef="ngModel" class="form-Control" [(ngModel)]="dateOfBirth" ngModel required value="dd-mm-yyyy" (change)="checkDate(dateOfBirthRef.value)" />
+            </div>
+            <div *ngIf="dateOfBirthRef.errors && (dateOfBirthRef.touched || dateOfBirthRef.dirty)" style="color:red">
+              <p [hidden]="!dateOfBirthRef.errors.required">
+                Date of birth is mandatory
+              </p>
+
+            </div>
+            <div [hidden]="!dbError" style="color:red">
+              Enter Date less than today's date
+            </div>
+          </div>
+          <br />
+          <div class="form-group">
+            <div>
+              <label for="textArea">Address</label>
+              <br />
+              <textarea id="textArea" rows="5" cols="30" name="address" placeholder="Enter the address" class="form-Control" #addressRef="ngModel" [(ngModel)]="address" ngModel required></textarea>
+            </div>
+            <div *ngIf="addressRef.errors && (addressRef.touched || addressRef.dirty)" style="color:red">
+              <p [hidden]="!addressRef.errors.required">
+                Address is mandatory
+              </p>
+
+            </div>
+          </div>
+          <br />
+          <div class="form-group">
+            <button type="submit" class="btn" [disabled]="!registrationForm.form.valid" (click)="registerCustomer(registrationForm)" style="background-color:lightgray">Register</button>
+          </div>
+
+          <div class="col-md-4">
+          </div>
+
+        </div>
+        <div *ngIf="showDiv" style="color:red;text-align:center ;font-size:large;font-weight:bold">
+          {{msg}}
+
+        </div>
+      </div>
+
+      <br />
+    </div>
+
+  </form>
+
+
+</div>
